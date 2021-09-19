@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx-probes
+  labels:
+    app: my-nginx-probes
+    rel: stable
+spec:
+  containers:
+    - name: my-nginx-probes
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        httpGet:
+          path: /index.html
+          port: 80
+        initialDelaySeconds: 15
+        timeoutSeconds: 2
+        periodSeconds: 5
+        failureThreshold: 1
+      readinessProbe:
+        httpGet:
+          path: /index.html
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 5
+        failureThreshold: 1
